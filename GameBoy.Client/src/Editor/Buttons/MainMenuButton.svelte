@@ -2,4 +2,4 @@
   import Button from 'UI/Button.svelte'
 </script>
 
-<Button icon="menu" iconOnly>menu</Button>
+<Button icon="mdi:menu" title="Open menu"></Button>

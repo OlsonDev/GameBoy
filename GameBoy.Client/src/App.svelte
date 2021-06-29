@@ -1,15 +1,15 @@
 <script>
-  import ContentPanel from 'Editor/ContentPanel.svelte'
-  import LayersPanel from 'Editor/LayersPanel.svelte'
+  import ContentPanel from 'Editor/Panels/ContentPanel.svelte'
+  import LayersPanel from 'Editor/Panels/LayersPanel.svelte'
   import MainTitleBar from 'Editor/MainTitleBar.svelte'
-  import PropertiesPanel from 'Editor/PropertiesPanel.svelte'
-  import SceneGraphPanel from 'Editor/SceneGraphPanel.svelte'
+  import PropertiesPanel from 'Editor/Panels/PropertiesPanel.svelte'
+  import SceneGraphPanel from 'Editor/Panels/SceneGraphPanel.svelte'
   import WorldViewport from 'Editor/WorldViewport.svelte'
 </script>
 
 <main>
-  <MainTitleBar />
   <WorldViewport />
+  <MainTitleBar />
   <PropertiesPanel />
   <LayersPanel />
   <ContentPanel />
@@ -18,6 +18,10 @@
 
 <style lang="scss">
   main {
-    display: grid;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: absolute;
   }
 </style>

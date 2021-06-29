@@ -6,13 +6,5 @@
   .title-bar {
     display: flex;
     gap: 5px;
-
-    > * {
-      border-left: 1px solid #666;
-
-      &:first-child {
-        border-left: 0;
-      }
-    }
   }
 </style>

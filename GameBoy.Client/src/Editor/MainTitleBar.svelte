@@ -1,10 +1,10 @@
 <script>
-  import MainMenuButton from 'Editor/MainMenuButton.svelte'
-  import PlayPauseButton from 'Editor/PlayPauseButton.svelte';
-  import PropertiesPanelToggleButton from 'Editor/PropertiesPanelToggleButton.svelte'
-  import LayersPanelToggleButton from 'Editor/LayersPanelToggleButton.svelte'
-  import ContentPanelToggleButton from 'Editor/ContentPanelToggleButton.svelte'
-  import SceneGraphPanelToggleButton from 'Editor/SceneGraphPanelToggleButton.svelte'
+  import MainMenuButton from 'Editor/Buttons/MainMenuButton.svelte'
+  import PlayPauseButton from 'Editor/Buttons/PlayPauseButton.svelte';
+  import PropertiesPanelToggleButton from 'Editor/Buttons/PropertiesPanelToggleButton.svelte'
+  import LayersPanelToggleButton from 'Editor/Buttons/LayersPanelToggleButton.svelte'
+  import ContentPanelToggleButton from 'Editor/Buttons/ContentPanelToggleButton.svelte'
+  import SceneGraphPanelToggleButton from 'Editor/Buttons/SceneGraphPanelToggleButton.svelte'
   import TitleBar from 'UI/TitleBar.svelte'
 </script>
 

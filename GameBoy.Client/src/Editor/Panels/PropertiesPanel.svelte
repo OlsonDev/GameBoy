@@ -1,11 +1,11 @@
 <script>
   import Panel from 'UI/Panel.svelte';
   import { selectedObject } from 'Stores/Editor.js';
-  import { isOpen } from 'Stores/PropertiesPanel.js';
+  import { isOpen, isGlowing } from 'Stores/PropertiesPanel.js';
 </script>
 
 {#if $isOpen}
-  <Panel name="Properties">
+  <Panel name="Properties" icon="mdi:file-document-edit" isGlowing={$isGlowing}>
     {#if $selectedObject == null}
       No object selected
     {:else}
