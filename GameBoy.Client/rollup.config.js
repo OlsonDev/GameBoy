@@ -1,12 +1,21 @@
-import svelte from 'rollup-plugin-svelte';
-import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
-import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
+import alias from '@rollup/plugin-alias';
+import commonjs from '@rollup/plugin-commonjs';
 import css from 'rollup-plugin-css-only';
+import livereload from 'rollup-plugin-livereload';
 import preprocess from 'svelte-preprocess';
+import resolve from '@rollup/plugin-node-resolve';
+import svelte from 'rollup-plugin-svelte';
 
 const production = !process.env.ROLLUP_WATCH;
+
+const aliases = alias({
+  resolve: ['.svelte', '.js'],
+  entries: [
+    { find: 'UI', replacement: 'src/UI' },
+    { find: 'Editor', replacement: 'src/Editor' },
+  ]
+});
 
 function serve() {
 	let server;
@@ -38,6 +47,7 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+    aliases,
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
