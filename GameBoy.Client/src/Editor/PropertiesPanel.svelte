@@ -1,13 +1,12 @@
 <script>
-  import Panel from 'UI/Panel.svelte'
-
-  export let object = null
-  export let isVisible
+  import Panel from 'UI/Panel.svelte';
+  import { selectedObject } from 'Stores/Editor.js';
+  import { isOpen } from 'Stores/PropertiesPanel.js';
 </script>
 
-{#if isVisible}
+{#if $isOpen}
   <Panel name="Properties">
-    {#if object == null}
+    {#if $selectedObject == null}
       No object selected
     {:else}
       TODO...

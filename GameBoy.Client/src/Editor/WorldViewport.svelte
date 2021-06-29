@@ -1,7 +1,7 @@
 <script>
-
+  // TODO: Import store.
 </script>
 
 <div>
-  TODO
+  (World viewport)
 </div>

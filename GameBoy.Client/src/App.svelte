@@ -1,17 +1,19 @@
 <script>
+  import ContentPanel from 'Editor/ContentPanel.svelte'
+  import LayersPanel from 'Editor/LayersPanel.svelte'
   import MainTitleBar from 'Editor/MainTitleBar.svelte'
-  import WorldViewport from 'Editor/WorldViewport.svelte'
   import PropertiesPanel from 'Editor/PropertiesPanel.svelte'
-
-  let isPlaying = true
-  let isPropertyPanelVisible = true
-
+  import SceneGraphPanel from 'Editor/SceneGraphPanel.svelte'
+  import WorldViewport from 'Editor/WorldViewport.svelte'
 </script>
 
 <main>
-  <MainTitleBar {isPlaying} bind:isPropertyPanelVisible />
-  <WorldViewport/>
-  <PropertiesPanel isVisible={isPropertyPanelVisible}/>
+  <MainTitleBar />
+  <WorldViewport />
+  <PropertiesPanel />
+  <LayersPanel />
+  <ContentPanel />
+  <SceneGraphPanel />
 </main>
 
 <style lang="scss">

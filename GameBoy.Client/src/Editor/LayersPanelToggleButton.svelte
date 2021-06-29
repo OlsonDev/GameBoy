@@ -1,12 +1,11 @@
 <script>
   import Button from 'UI/Button.svelte'
+  import { isOpen } from 'Stores/LayersPanel.js';
 
-  export let isVisible
-
-  $: icon = isVisible ? 'hide props' : 'show props'
+  $: icon = $isOpen ? 'hide layers' : 'show layers'
 
   function onClick() {
-    isVisible = !isVisible
+    $isOpen = !$isOpen
   }
 </script>
 

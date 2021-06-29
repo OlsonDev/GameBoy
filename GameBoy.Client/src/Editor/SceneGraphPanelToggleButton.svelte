@@ -1,11 +1,11 @@
 <script>
   import Button from 'UI/Button.svelte'
-  import { isPlaying } from 'Stores/Editor.js';
+  import { isOpen } from 'Stores/SceneGraphPanel.js';
 
-  $: icon = $isPlaying ? 'pause' : 'play'
+  $: icon = $isOpen ? 'hide scene graph' : 'show scene graph'
 
   function onClick() {
-    $isPlaying = !$isPlaying
+    $isOpen = !$isOpen
   }
 </script>
 

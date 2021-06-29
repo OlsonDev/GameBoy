@@ -1,11 +1,11 @@
 <script>
   import Button from 'UI/Button.svelte'
-  import { isPlaying } from 'Stores/Editor.js';
+  import { isOpen } from 'Stores/PropertiesPanel.js';
 
-  $: icon = $isPlaying ? 'pause' : 'play'
+  $: icon = $isOpen ? 'hide props' : 'show props'
 
   function onClick() {
-    $isPlaying = !$isPlaying
+    $isOpen = !$isOpen
   }
 </script>
 

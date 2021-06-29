@@ -1,15 +1,18 @@
 <script>
   import MainMenuButton from 'Editor/MainMenuButton.svelte'
   import PlayPauseButton from 'Editor/PlayPauseButton.svelte';
-  import PropertyPanelToggleButton from 'Editor/PropertyPanelToggleButton.svelte'
+  import PropertiesPanelToggleButton from 'Editor/PropertiesPanelToggleButton.svelte'
+  import LayersPanelToggleButton from 'Editor/LayersPanelToggleButton.svelte'
+  import ContentPanelToggleButton from 'Editor/ContentPanelToggleButton.svelte'
+  import SceneGraphPanelToggleButton from 'Editor/SceneGraphPanelToggleButton.svelte'
   import TitleBar from 'UI/TitleBar.svelte'
-
-  export let isPlaying
-  export let isPropertyPanelVisible
 </script>
 
 <TitleBar>
   <MainMenuButton />
-  <PlayPauseButton bind:isPlaying/>
-  <PropertyPanelToggleButton bind:isVisible={isPropertyPanelVisible} />
+  <PlayPauseButton />
+  <PropertiesPanelToggleButton />
+  <LayersPanelToggleButton />
+  <ContentPanelToggleButton />
+  <SceneGraphPanelToggleButton />
 </TitleBar>
