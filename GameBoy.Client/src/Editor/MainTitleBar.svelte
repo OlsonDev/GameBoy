@@ -8,7 +8,7 @@
   import TitleBar from 'UI/TitleBar.svelte'
 </script>
 
-<TitleBar>
+<TitleBar class="main-title-bar">
   <MainMenuButton />
   <PlayPauseButton />
   <PropertiesPanelToggleButton />

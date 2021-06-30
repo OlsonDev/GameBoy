@@ -2,6 +2,12 @@
   // TODO: Import store.
 </script>
 
-<div>
+<div class="world-viewport">
   (World viewport)
 </div>
+
+<style>
+  .world-viewport {
+    background: cornflowerblue;
+  }
+</style>

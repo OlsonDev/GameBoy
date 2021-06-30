@@ -5,7 +5,7 @@
 </script>
 
 {#if $isOpen}
-  <Panel name="Properties" icon="mdi:file-document-edit" isGlowing={$isGlowing}>
+  <Panel name="Properties" icon="mdi:file-document-edit" isGlowing={$isGlowing} class="properties-panel">
     {#if $selectedObject == null}
       No object selected
     {:else}
