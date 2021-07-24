@@ -3,6 +3,10 @@
   import { selectedObject } from 'Stores/Editor.js';
   import { isOpen, isGlowing } from 'Stores/PropertiesPanel.js';
 
+  export let placement
+  export let noHeader = false
+  export let noBody = false
+
   $: entries = buildEntries($selectedObject)
 
   function buildEntries(object) {
@@ -13,7 +17,7 @@
 </script>
 
 {#if $isOpen}
-  <Panel name="Properties" icon="mdi:file-document-edit" isGlowing={$isGlowing} class="properties-panel">
+  <Panel name="Properties" icon="mdi:file-document-edit" isGlowing={$isGlowing} class="properties-panel" {placement} {noHeader} {noBody}>
     {#if entries == null}
       No object selected
     {:else}

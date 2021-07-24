@@ -5,6 +5,10 @@
   import { isOpen, isGlowing, content } from 'Stores/ContentPanel.js'
   import { pluralize } from 'Services/Strings.js'
 
+  export let placement
+  export let noHeader = false
+  export let noBody = false
+
   let showContextMenu = false
 
   function onContextMenu(e) {
@@ -14,7 +18,7 @@
 </script>
 
 {#if $isOpen}
-  <Panel name="Content" icon="mdi:archive" isGlowing={$isGlowing} class="content-panel" {onContextMenu}>
+  <Panel name="Content" icon="mdi:archive" isGlowing={$isGlowing} class="content-panel" {onContextMenu} {placement} {noHeader} {noBody}>
     <div slot="header">
       <Badge countable={$content} title="{pluralize($content, 'item')} available" />
     </div>
