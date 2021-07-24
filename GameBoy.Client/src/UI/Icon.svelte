@@ -3,8 +3,11 @@
   // See https://docs.iconify.design/icon-components/svelte/#properties
 
   export let name
-  export let width = 32
-  export let height = 32
+  export let width = null
+  export let height = null
+
+  $: iconWidth = width ?? 32
+  $: iconHeight = height ?? 32
 </script>
 
-<IconifyIcon icon={name} {width} {height} />
+<IconifyIcon icon={name} width={iconWidth} height={iconHeight} />

@@ -1,6 +1,7 @@
 <script>
   import ToggleButton from 'UI/ToggleButton.svelte'
-  import { isOpen, isGlowing } from 'Stores/ContentPanel.js';
+  import { isOpen, isGlowing } from 'Stores/ContentPanel.js'
+  import { toggleSingleton } from 'Stores/DynamicPanels.js'
 
   let icon
   let title
@@ -8,6 +9,7 @@
   $: $isOpen, update()
 
   function update() {
+    toggleSingleton('content', $isOpen)
     if ($isOpen) {
       icon = 'mdi:archive'
       title = 'Click to close the Content panel'

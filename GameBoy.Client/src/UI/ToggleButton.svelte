@@ -17,6 +17,7 @@
 </script>
 
 <Button
+  class="toggle-btn"
   {icon}
   {title}
   {onClick}

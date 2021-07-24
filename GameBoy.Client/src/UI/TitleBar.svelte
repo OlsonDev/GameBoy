@@ -3,14 +3,6 @@
   export { className as class };
 </script>
 
-<div class="title-bar{className ? ` ${className}` : ''}">
+<div class="title-bar flex gap-1 bg-gray-800{className ? ` ${className}` : ''}">
   <slot />
 </div>
-
-<style lang="scss">
-  .title-bar {
-    display: flex;
-    gap: 5px;
-    background: #424242;
-  }
-</style>

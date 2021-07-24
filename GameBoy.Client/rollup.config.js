@@ -55,7 +55,14 @@ export default {
 				// enable run-time checks when not in production
 				dev: !production
 			},
-			preprocess: preprocess(),
+			preprocess: preprocess({
+				sourceMap: true,
+				postcss: {
+					plugins: [
+						require('tailwindcss'),
+					]
+				}
+			}),
 		}),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
