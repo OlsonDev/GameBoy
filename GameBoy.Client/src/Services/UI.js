@@ -54,10 +54,10 @@ const getPlacementResizeEdges = (placement) => {
   }
   const p = placement
   if (isFloatingPlacement(p)) return edges
-  edges.top = !p.bottom
-  edges.bottom = !p.top
-  edges.left = !p.right
-  edges.right = !p.left
+  edges.top = p.top == null && !p.bottom || !!p.top
+  edges.bottom = p.bottom == null && !p.top || !!p.bottom
+  edges.left = p.left == null && !p.right || !!p.left
+  edges.right = p.right == null && !p.left || !!p.right
   return edges
 }
 

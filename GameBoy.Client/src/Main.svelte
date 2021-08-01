@@ -19,9 +19,11 @@
   addType('scene-graph', SceneGraphPanel, sceneGraphPlacement)
   addType('texture-editor', TextureEditorPanel)
 
-  $: console.log(panelsElem, $panelsElem)
   $: if ($panelsElem && $panels.length) addPanelTypes()
+  let addedPanelTypes = false
   function addPanelTypes() {
+    if (addedPanelTypes) return
+    addedPanelTypes = true
     const height = $panelsElem.offsetHeight
     const width = $panelsElem.offsetWidth
     const sidePanelWidth = 0.2 * width
@@ -32,7 +34,6 @@
     // TODO: This code sucks. Figure out a better way to avoid this race condition
     // where $panelsElem's size can't be figured out till later.
     for (const panel of $panels) {
-      console.log('panel', panel)
       const p = panel.placement
       switch (panel.type) {
         case 'content':
