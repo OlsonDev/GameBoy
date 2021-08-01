@@ -3,7 +3,7 @@
   import { selectedObject } from 'Stores/Editor.js';
   import { isOpen, isGlowing } from 'Stores/PropertiesPanel.js';
 
-  export let placement
+  export let panel
   export let noHeader = false
   export let noBody = false
 
@@ -17,7 +17,7 @@
 </script>
 
 {#if $isOpen}
-  <Panel name="Properties" icon="mdi:file-document-edit" isGlowing={$isGlowing} class="properties-panel" {placement} {noHeader} {noBody}>
+  <Panel {panel} name="Properties" icon="mdi:file-document-edit" isGlowing={$isGlowing} class="properties-panel" {noHeader} {noBody}>
     {#if entries == null}
       No object selected
     {:else}

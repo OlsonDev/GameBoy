@@ -5,7 +5,7 @@
   import { isOpen, isGlowing, content } from 'Stores/ContentPanel.js'
   import { pluralize } from 'Services/Strings.js'
 
-  export let placement
+  export let panel
   export let noHeader = false
   export let noBody = false
 
@@ -18,7 +18,7 @@
 </script>
 
 {#if $isOpen}
-  <Panel name="Content" icon="mdi:archive" isGlowing={$isGlowing} class="content-panel" {onContextMenu} {placement} {noHeader} {noBody}>
+  <Panel {panel} name="Content" icon="mdi:archive" isGlowing={$isGlowing} class="content-panel" {onContextMenu} {noHeader} {noBody}>
     <div slot="header">
       <Badge countable={$content} title="{pluralize($content, 'item')} available" />
     </div>

@@ -1,8 +1,8 @@
 <script>
   import { clamp } from 'lodash'
 
-  export let placement
-  export let panels = []
+  export let panel // The TabPanel itself
+  export let panels = [] // The Panels in the TabPanel
 
   let activePanel = null
   let activePanelIndex = -1
