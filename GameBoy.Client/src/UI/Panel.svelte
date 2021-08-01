@@ -1,5 +1,5 @@
 <script>
-  import { moveToTop, isDraggingPanel, resizePanel } from 'Stores/DynamicPanels.js'
+  import { moveToTop, isDraggingPanel, resizePanel, undockPanel } from 'Stores/DynamicPanels.js'
   import { noop } from 'lodash'
   import Icon from 'UI/Icon.svelte'
   import interact from 'interactjs'
@@ -58,14 +58,14 @@
 
   function dragStartListener(e) {
     e.interactable.panel = panel
-    UI.makeFloatingPlacement(panel.placement, panelElem)
+    undockPanel(panel, panelElem)
     panel = panel
   }
 
   function dragMoveListener(e) {
     moveToTop(panel)
-    panel.placement.transformX += e.dx
-    panel.placement.transformY += e.dy
+    panel.placement.translateX += e.dx
+    panel.placement.translateY += e.dy
     $isDraggingPanel = panel
   }
 
