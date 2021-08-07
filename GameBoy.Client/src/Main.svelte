@@ -3,21 +3,29 @@
   import ContentPanel from 'Editor/Panels/ContentPanel.svelte'
   import LayersPanel from 'Editor/Panels/LayersPanel.svelte'
   import MainTitleBar from 'Editor/MainTitleBar.svelte'
+  import PanelEventHandler from 'UI/PanelEventHandler.svelte'
   import PanelDropTarget from 'UI/PanelDropTarget.svelte'
+  import PanelDropTargetHint from 'UI/PanelDropTargetHint.svelte'
   import PropertiesPanel from 'Editor/Panels/PropertiesPanel.svelte'
   import SceneGraphPanel from 'Editor/Panels/SceneGraphPanel.svelte'
   import TextureEditorPanel from 'Editor/Panels/TextureEditorPanel.svelte'
+  import TabPanel from 'Editor/Panels/TabPanel.svelte'
+  import ColumnPanel from 'Editor/Panels/ColumnPanel.svelte'
+  import RowPanel from 'Editor/Panels/RowPanel.svelte'
 
   const contentPlacement = { bottom: 0 }
   const layersPlacement = { right: 0, top: 0 }
   const propertiesPlacement = { right: 0, bottom: 0 }
   const sceneGraphPlacement = { left: 0, top: 0, bottom: 0 }
 
-  addType('content', ContentPanel, contentPlacement)
-  addType('layers', LayersPanel, layersPlacement)
-  addType('properties', PropertiesPanel, propertiesPlacement)
-  addType('scene-graph', SceneGraphPanel, sceneGraphPlacement)
+  addType('content', ContentPanel, { placement: contentPlacement })
+  addType('layers', LayersPanel, { placement: layersPlacement })
+  addType('properties', PropertiesPanel, { placement: propertiesPlacement })
+  addType('scene-graph', SceneGraphPanel, { placement: sceneGraphPlacement })
   addType('texture-editor', TextureEditorPanel)
+  addType('tab-panel', TabPanel)
+  addType('column-panel', ColumnPanel)
+  addType('row-panel', RowPanel)
 
   $: if ($panelsElem && $panels.length) addPanelTypes()
   let addedPanelTypes = false
@@ -37,17 +45,16 @@
       const p = panel.placement
       switch (panel.type) {
         case 'content':
-          console.log('content found')
           p.height = contentHeight
           p.left = sidePanelWidth
           p.right = sidePanelWidth
           break;
         case 'layers':
-          p.bottom = halfHeight
+          p.height = halfHeight
           p.width = sidePanelWidth
           break;
         case 'properties':
-          p.top = halfHeight
+          p.height = halfHeight
           p.width = sidePanelWidth
           break;
         case 'scene-graph':
@@ -67,6 +74,9 @@
       <svelte:component this={panel.panelComponent} {...panel.props} {panel} />
     {/each}
 
+    <PanelDropTargetHint />
     <PanelDropTarget />
   </div>
 </main>
+
+<PanelEventHandler />

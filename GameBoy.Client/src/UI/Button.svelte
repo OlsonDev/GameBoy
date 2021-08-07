@@ -14,10 +14,12 @@
   export let disabled = false
   let className = null
   export { className as class }
+  export let style = null
 </script>
 
 <button
   class="btn flex items-center gap-1{className ? ` ${className}` : ''}"
+  {style}
   {title}
   {disabled}
   on:click={onClick}

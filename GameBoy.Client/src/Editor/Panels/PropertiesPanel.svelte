@@ -11,7 +11,7 @@
 
   function buildEntries(object) {
     if (object == null) return null
-    const entries = Object.entries(object).map((key, value) => ({ key, value }))
+    const entries = Object.entries(object).map(([key, value]) => ({ key, value }))
     return entries
   }
 </script>
@@ -21,9 +21,32 @@
     {#if entries == null}
       No object selected
     {:else}
-      {#each entries as entry}
-        {entry.key}<br/>
-      {/each}
+      <table class="properties-table">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {#each entries as entry}
+            <tr>
+              <td>{entry.key}</td>
+              <td>{entry.value}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
     {/if}
   </Panel>
 {/if}
+
+<style lang="scss">
+  .properties-table {
+    text-align: left;
+
+    th, td {
+      padding: 0 20px 0 0;
+    }
+  }
+</style>

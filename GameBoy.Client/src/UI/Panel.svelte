@@ -1,10 +1,11 @@
 <script>
-  import { moveToTop, isDraggingPanel, resizePanel, undockPanel } from 'Stores/DynamicPanels.js'
+  import { moveToTop, isDraggingPanel, resizePanel, undockPanel, dropPanelPlacement } from 'Stores/DynamicPanels.js'
   import { noop } from 'lodash'
   import Icon from 'UI/Icon.svelte'
   import interact from 'interactjs'
   import UI from 'Services/UI.js'
 
+  export let panelElem = null
   export let panel
   export let name
   export let icon
@@ -15,7 +16,8 @@
   export let noHeader = false
   export let noBody = false
 
-  let panelElem = null
+  $: isEmbedded = noBody || noHeader
+
   let headerElem = null
   $: panelElem, headerElem, setInteractable()
   $: panelElem, headerElem, panel, setResizableEdges()
@@ -26,10 +28,9 @@
 
   let interactable = null
   function setInteractable() {
-    if (!panelElem || !headerElem) return
+    if (!panelElem || !headerElem || isEmbedded) return
     interactable = interact(panelElem)
       .draggable({
-        panel,
         allowFrom: headerElem,
         listeners: {
           start: dragStartListener,
@@ -45,6 +46,7 @@
       .resizable({
         edges: UI.getPlacementResizeEdges(panel.placement),
         listeners: resizableListeners,
+        margin: 4,
       })
   }
 
@@ -72,10 +74,12 @@
   function dragEndListener(e) {
     if ($isDraggingPanel === panel) {
       $isDraggingPanel = null
+      $dropPanelPlacement = null
     }
   }
 
   function resizeMoveListener(e) {
+    moveToTop(panel)
     resizePanel(panel, e)
     panel = panel
   }
@@ -83,12 +87,12 @@
 
 <div
   bind:this={panelElem}
-  class="panel absolute p-1 bg-gray-800 text-white border border-gray-900{className ? ` ${className}` : ''}"
+  class="panel p-1{isEmbedded ? '' : ' bg-gray-800 text-white border border-gray-900 absolute'}{className ? ` ${className}` : ''}"
   class:is-glowing={isGlowing}
-  on:contextmenu={onContextMenu}
-  on:focusin={() => moveToTop(panel)}
-  on:click={() => moveToTop(panel)}
-  style={UI.placementStyle(panel.placement)}
+  on:contextmenu={noBody ? null : onContextMenu}
+  on:focusin={isEmbedded ? null : () => moveToTop(panel)}
+  on:click={isEmbedded ? null : () => moveToTop(panel)}
+  style={isEmbedded ? null : UI.placementStyle(panel.placement)}
 >
   {#if !noHeader}
     <h3 bind:this={headerElem} class="flex items-center gap-2 text-sm">

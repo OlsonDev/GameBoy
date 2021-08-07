@@ -7,8 +7,11 @@
   import { selectedObject } from 'Stores/Editor.js'
 
   export let isOpen = false
+  export let top = 0
+  export let left = 0
 
-  function newTexture() {
+  function newTexture(e) {
+    e.stopImmediatePropagation()
     isOpen = false
 
     const texture = { type: 'texture', name: 'New texture', width: 64, height: 64, data: [] }
@@ -22,7 +25,7 @@
   }
 </script>
 
-<Menu bind:isOpen>
+<Menu bind:isOpen {top} {left}>
   <MenuSection icon="mdi:plus-box-outline" name="New…">
     <MenuItem icon="mdi:wall" onClick={newTexture}>Texture</MenuItem>
     <MenuItem icon="mdi:animation" disabled>Animation</MenuItem>

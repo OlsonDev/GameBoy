@@ -61,10 +61,25 @@ const getPlacementResizeEdges = (placement) => {
   return edges
 }
 
+const normalize = (placement, container) => {
+  const p = placement
+  const c = container
+  const left = p.left == null
+    ? c.left + c.width - p.right - p.width + p.translateX
+    : c.left + p.left + p.translateX
+  const top = p.top == null
+    ? c.top + c.height - p.bottom - p.height + p.translateY
+    : c.top + p.top + p.translateY
+  const width = p.width ?? c.width - (p.left ?? 0) - (p.right ?? 0)
+  const height = p.height ?? c.height - (p.top ?? 0) - (p.bottom ?? 0)
+  return newPlacement({ left, top, width, height })
+}
+
 export default {
   newPlacement,
   placementStyle,
   makeFloatingPlacement,
   isFloatingPlacement,
   getPlacementResizeEdges,
+  normalize,
 }
