@@ -7,10 +7,9 @@
   import { pluralize } from 'Services/Strings.js'
 
   export let panel
-  export let noHeader = false
-  export let noBody = false
+  export let panelProps = {}
 
-  $: isEmbedded = noHeader || noBody
+  $: isEmbedded = panelProps.noHeader || panelProps.noBody
 
   let showContextMenu = false
 
@@ -37,7 +36,7 @@
 </script>
 
 {#if $isOpen}
-  <Panel bind:panelElem {panel} name="Content" icon="mdi:archive" isGlowing={$isGlowing} class="content-panel" {onContextMenu} {noHeader} {noBody}>
+  <Panel bind:panelElem {panel} name="Content" icon="mdi:archive" isGlowing={$isGlowing} class="content-panel" {onContextMenu} {...panelProps}>
     <div slot="header">
       <Badge countable={$content} title="{pluralize($content, 'item')} available" />
     </div>

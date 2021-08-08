@@ -5,12 +5,11 @@
   import { pluralize } from 'Services/Strings.js'
 
   export let panel
-  export let noHeader = false
-  export let noBody = false
+  export let panelProps = {}
 </script>
 
 {#if $isOpen}
-  <Panel {panel} name="Scene graph" icon="mdi:graph" isGlowing={$isGlowing} class="scene-graph-panel" {noHeader} {noBody}>
+  <Panel {panel} name="Scene graph" icon="mdi:graph" isGlowing={$isGlowing} class="scene-graph-panel" {...panelProps}>
     <div slot="header">
       <Badge countable={$scene} title="{pluralize($scene, 'object')} in scene" />
     </div>

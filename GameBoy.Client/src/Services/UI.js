@@ -9,21 +9,22 @@ const newPlacement = ({ top, bottom, left, right, width, height, translateX, tra
   translateY: translateY ?? 0,
 })
 
-const px = n => `${n}px`;
+const px = n => n ? `${n}px` : '0';
+const push = (styles, placement, key) => styles.push(`${key}: ${px(placement[key])}`);
 
 const placementStyle = (placement) => {
   const p = placement
   if (p == null) return null
   const styles = []
-  if (p.top != null) styles.push(`top: ${px(p.top)}`)
-  if (p.bottom != null) styles.push(`bottom: ${px(p.bottom)}`)
-  if (p.left != null) styles.push(`left: ${px(p.left)}`)
-  if (p.right != null) styles.push(`right: ${px(p.right)}`)
-  if (p.width != null) styles.push(`width: ${px(p.width)}`)
-  if (p.height != null) styles.push(`height: ${px(p.height)}`)
+  if (p.top != null) push(styles, p, 'top')
+  if (p.bottom != null) push(styles, p, 'bottom')
+  if (p.left != null) push(styles, p, 'left')
+  if (p.right != null) push(styles, p, 'right')
+  if (p.width != null) push(styles, p, 'width')
+  if (p.height != null) push(styles, p, 'height')
   if (p.translateX || p.translateY) styles.push(`transform: translate(${px(p.translateX)}, ${px(p.translateY)})`)
   return styles.length
-    ? styles.join(';')
+    ? styles.join('; ')
     : null
 }
 

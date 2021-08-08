@@ -5,8 +5,8 @@
   import interact from 'interactjs'
   import UI from 'Services/UI.js'
 
-  export let panel // The TabPanel itself
-  export let panels = [] // The Panels in the TabPanel
+  export let panel // This container panel itself
+  export let panels = [] // The panels in this container
   let className = null
   export { className as class }
 
@@ -29,11 +29,6 @@
     activePanelIndex = -1
     activePanel = null
   }
-
-  export function onResize(oldPlacement, newPlacement) {
-    console.log('onResize called!')
-  }
-
 
 
   // TODO: Consolidate this with <Panel>:
@@ -70,6 +65,11 @@
         edges: UI.getPlacementResizeEdges(panel.placement),
         listeners: resizableListeners,
         margin: 4,
+        modifiers: [
+          interact.modifiers.restrictSize({
+            min: { width: 320, height: 240 }
+          }),
+        ],
       })
   }
 
@@ -77,7 +77,7 @@
     if (!interactable) return
     const edges = UI.getPlacementResizeEdges(panel.placement)
     interactable.resizable({
-      edges
+      edges,
     })
   }
 
@@ -115,21 +115,21 @@
   on:focusin={() => moveToTop(panel)}
   on:click={() => moveToTop(panel)}
 >
-
-<div bind:this={dragElem} class="tabs flex items-start bg-gray-600">
+  <div bind:this={dragElem} class="tabs flex items-start bg-gray-600 overflow-hidden">
     <div>
       <Icon name="mdi:drag" />
     </div>
+
     {#each panels as panel (panel.id)}
       <div on:click={() => (activePanel = panel)} class="cursor-pointer px-2 {panel === activePanel ? 'bg-gray-800' : 'bg-gray-700'}">
-        <svelte:component this={panel.panelComponent} {...panel.props} {panel} noBody/>
+        <svelte:component this={panel.panelComponent} {...panel.props} {panel} panelProps={{ noBody: true }} />
       </div>
     {/each}
   </div>
 
   <div class="content p-1 w-full h-full">
     {#if activePanel}
-      <svelte:component this={activePanel.panelComponent} {...activePanel.props} panel={activePanel} noHeader/>
+      <svelte:component this={activePanel.panelComponent} {...activePanel.props} panel={activePanel} panelProps={{ noHeader: true }}/>
     {/if}
   </div>
 </div>

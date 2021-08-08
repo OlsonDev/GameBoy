@@ -22,5 +22,5 @@
   }
 </script>
 
-<div class="absolute" style="background: #166534; opacity: 0.3; {UI.placementStyle(dropHintPlacement)}" class:hidden={!dropHintPlacement}>
+<div class="absolute" style="background: #166534; opacity: 0.3; {UI.placementStyle(dropHintPlacement) ?? ''}" class:hidden={!dropHintPlacement}>
 </div>

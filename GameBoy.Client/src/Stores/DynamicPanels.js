@@ -5,7 +5,7 @@ import { noop } from 'lodash';
 let panelId = 0
 const types = {}
 const singletons = {}
-export function addType(type, panelComponent, { placement = null, resize = null } = {}) {
+export function addPanelType(type, panelComponent, { placement = null, resize = null } = {}) {
   resize ??= noop
 
   types[type] = {
@@ -28,6 +28,7 @@ export function addType(type, panelComponent, { placement = null, resize = null 
 
 export const panelsElem = writable(null);
 export const panels = writable([]);
+export const isResizingPanel = writable(null);
 export const isDraggingPanel = writable(null);
 export const dropPanel = writable(null);
 export const dropIntent = writable(null);
@@ -66,7 +67,7 @@ export function openPanel(type, props, placement = null) {
 export function moveToTop(panel, offset = 0) {
   panels.update(all => {
     const i = all.indexOf(panel)
-    all.splice(i, 1)
+    if (i >= 0) all.splice(i, 1)
     const spliceIndex = Math.max(0, all.length - offset)
     all.splice(spliceIndex, 0, panel)
     return all
@@ -92,13 +93,16 @@ const edgeMetas = {
   },
 }
 
-export function buildDockPlacement(edge) {
+function getPanelsElemDimensions() {
   const elem = get(panelsElem)
-  const dimensions = {
+  return {
     height: elem.offsetHeight,
     width: elem.offsetWidth,
   }
+}
 
+export function buildDockPlacement(edge) {
+  const dimensions = getPanelsElemDimensions()
   const edgeMeta = edgeMetas[edge]
   const dimension = 0.2 * dimensions[edgeMeta.dockGrowth]
   const placement = {
@@ -114,12 +118,47 @@ export function buildDockPlacement(edge) {
 }
 
 function dockLeftRight(placement, left, right) {
-  const p = placement
-  const elem = get(panelsElem)
-  const width = (p.width ?? elem.offsetWidth - (p.left ?? 0) - (p.right ?? 0)) / 2
-  left.placement = UI.newPlacement({ ...placement, width, left: p.left, right: p.right == null ? null : p.right + width })
-  right.placement = UI.newPlacement({ ...placement, width, right: p.right, left: p.left == null ? null : p.left + width })
-  panels.update(all => all)
+  if (left.type !== 'row-panel' && right.type  === 'row-panel') {
+    [left, right] = [right, left];
+  }
+  const rightIsRowPanel = right.type === 'row-panel'
+  const reuseRowPanel = left.type === 'row-panel'
+  const rowPanel = reuseRowPanel
+    ? left
+    : openPanel(
+      'row-panel'
+      , {  panels: rightIsRowPanel ? [left, ...right.props.panels] : [left, right] }
+      , placement)
+
+  if (reuseRowPanel) {
+    rowPanel.placement = placement
+    if (rightIsRowPanel) rowPanel.props.panels.push(...right.props.panels)
+    else rowPanel.props.panels.push(right)
+  }
+
+  const dimensions = getPanelsElemDimensions()
+  const { width, height } = UI.normalize(placement, dimensions)
+  let totalChildPanelWidth = 0
+  const panelToNormalizedPlacement = new Map()
+  for (const p of rowPanel.props.panels) {
+    p.parentPanel = rowPanel
+    const n = UI.normalize(p.placement, dimensions)
+    panelToNormalizedPlacement.set(p, n)
+    totalChildPanelWidth += n.width
+  }
+  let leftoverWidth = width
+  for (let i = 0; i < rowPanel.props.panels.length - 1; i++) {
+    const p = rowPanel.props.panels[i]
+    const n = panelToNormalizedPlacement.get(p)
+    const newChildPanelWidth = width * n.width / totalChildPanelWidth
+    leftoverWidth -= newChildPanelWidth
+    p.placement = UI.newPlacement({ height, width: newChildPanelWidth })
+  }
+  rowPanel.props.panels[rowPanel.props.panels.length - 1].placement = UI.newPlacement({ height, width: leftoverWidth })
+
+  const panelsToRemove = reuseRowPanel ? [right] : [left, right]
+  panels.update(all => all.filter(p => !panelsToRemove.includes(p)))
+
 }
 
 function dockTopBottom(placement, top, bottom) {
@@ -183,7 +222,6 @@ export function dockPanel(panel, intent) {
 
 export function undockPanel(panel, panelElem) {
   UI.makeFloatingPlacement(panel.placement, panelElem)
-  // TODO: Move other panels to occupy space
 }
 
 export function resizePanel(panel, { edges, rect, deltaRect }) {
@@ -202,5 +240,4 @@ export function resizePanel(panel, { edges, rect, deltaRect }) {
     panel.placement.width = rect.width
     return
   }
-  // TODO: Resize panels sharing edge.
 }

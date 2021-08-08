@@ -1,5 +1,5 @@
 <script>
-  import { addType, panels, panelsElem } from 'Stores/DynamicPanels.js'
+  import { addPanelType, panels, panelsElem } from 'Stores/DynamicPanels.js'
   import ContentPanel from 'Editor/Panels/ContentPanel.svelte'
   import LayersPanel from 'Editor/Panels/LayersPanel.svelte'
   import MainTitleBar from 'Editor/MainTitleBar.svelte'
@@ -18,14 +18,14 @@
   const propertiesPlacement = { right: 0, bottom: 0 }
   const sceneGraphPlacement = { left: 0, top: 0, bottom: 0 }
 
-  addType('content', ContentPanel, { placement: contentPlacement })
-  addType('layers', LayersPanel, { placement: layersPlacement })
-  addType('properties', PropertiesPanel, { placement: propertiesPlacement })
-  addType('scene-graph', SceneGraphPanel, { placement: sceneGraphPlacement })
-  addType('texture-editor', TextureEditorPanel)
-  addType('tab-panel', TabPanel)
-  addType('column-panel', ColumnPanel)
-  addType('row-panel', RowPanel)
+  addPanelType('content', ContentPanel, { placement: contentPlacement })
+  addPanelType('layers', LayersPanel, { placement: layersPlacement })
+  addPanelType('properties', PropertiesPanel, { placement: propertiesPlacement })
+  addPanelType('scene-graph', SceneGraphPanel, { placement: sceneGraphPlacement })
+  addPanelType('texture-editor', TextureEditorPanel)
+  addPanelType('tab-panel', TabPanel)
+  addPanelType('column-panel', ColumnPanel)
+  addPanelType('row-panel', RowPanel)
 
   $: if ($panelsElem && $panels.length) addPanelTypes()
   let addedPanelTypes = false

@@ -4,8 +4,7 @@
   import { isOpen, isGlowing } from 'Stores/PropertiesPanel.js';
 
   export let panel
-  export let noHeader = false
-  export let noBody = false
+  export let panelProps = {}
 
   $: entries = buildEntries($selectedObject)
 
@@ -17,7 +16,7 @@
 </script>
 
 {#if $isOpen}
-  <Panel {panel} name="Properties" icon="mdi:file-document-edit" isGlowing={$isGlowing} class="properties-panel" {noHeader} {noBody}>
+  <Panel {panel} name="Properties" icon="mdi:file-document-edit" isGlowing={$isGlowing} class="properties-panel" {...panelProps}>
     {#if entries == null}
       No object selected
     {:else}

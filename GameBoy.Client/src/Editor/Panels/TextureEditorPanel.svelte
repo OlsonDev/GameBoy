@@ -3,8 +3,7 @@
   import Button from 'UI/Button.svelte'
 
   export let panel
-  export let noHeader = false
-  export let noBody = false
+  export let panelProps = {}
   export let texture
 
   let bgStyle = 'none'
@@ -12,7 +11,7 @@
   const bgButtonStyle = 'width: 26px; height: 26px'
 </script>
 
-<Panel {panel} name="Texture" icon="mdi:wall" class="texture-panel" {noHeader} {noBody}>
+<Panel {panel} name="Texture" icon="mdi:wall" class="texture-panel" {...panelProps}>
   {texture.name}
 
   <div class="flex gap-1">
